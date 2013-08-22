@@ -1,0 +1,5 @@
+estina_core:
+    resource: "@EstinaCoreBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
