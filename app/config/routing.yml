@@ -1,5 +1,5 @@
 estina_core:
-    resource: "@EstinaCoreBundle/Controller/"
+    resource: "@TotoCoreBundle/Controller/"
     type:     annotation
     prefix:   /
 

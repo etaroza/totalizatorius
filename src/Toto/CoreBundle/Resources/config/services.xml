@@ -6,7 +6,7 @@
 
     <!--
     <parameters>
-        <parameter key="estina_core.example.class">Estina\CoreBundle\Example</parameter>
+        <parameter key="estina_core.example.class">Toto\CoreBundle\Example</parameter>
     </parameters>
 
     <services>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Estina\CoreBundle\Tests\Controller;
+namespace Toto\CoreBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
