@@ -29,9 +29,9 @@ class Tournament
     private $name;
 
     /**
-     * @var integer
+     * @var boolean
      *
-     * @ORM\Column(name="active", type="integer")
+     * @ORM\Column(name="active", type="boolean")
      */
     private $active = 1;
 
@@ -89,6 +89,6 @@ class Tournament
      */
     public function getActive()
     {
-        return $this->active;
+        return (bool) $this->active;
     }
 }
