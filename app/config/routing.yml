@@ -1,3 +1,8 @@
+toto_totalizer:
+    resource: "@TotoTotalizerBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 estina_core:
     resource: "@TotoCoreBundle/Controller/"
     type:     annotation
