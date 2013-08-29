@@ -1,0 +1,4 @@
+
+index:
+    pattern:  /
+    defaults: { _controller: "TotoCoreBundle:Default:index" }
