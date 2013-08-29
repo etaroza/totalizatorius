@@ -2,7 +2,8 @@
 
 namespace Toto\TotalizerBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM,
+    Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Tournament
@@ -25,6 +26,7 @@ class Tournament
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -89,5 +91,15 @@ class Tournament
     public function getActive()
     {
         return (bool) $this->active;
+    }
+
+    /**
+     * __toString 
+     * 
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
     }
 }
