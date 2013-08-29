@@ -3,13 +3,15 @@
 namespace Toto\TotalizerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM,
-    Symfony\Component\Validator\Constraints as Assert;
+    Symfony\Component\Validator\Constraints as Assert,
+    Symfony\Component\Validator\ExecutionContextInterface;
 
 /**
  * Game
  *
  * @ORM\Table(name="game")
  * @ORM\Entity
+ * @Assert\Callback(methods={"isTeamsValid"})
  */
 class Game
 {
@@ -186,5 +188,17 @@ class Game
     public function getScoreAway()
     {
         return $this->scoreAway;
+    }
+
+    /**
+     * Check if both teams are not same.
+     * 
+     * @param ExecutionContextInterface $context 
+     */
+    public function isTeamsValid(ExecutionContextInterface $context)
+    {
+        if ($this->getTeamHome() == $this->getTeamAway()) {
+            $context->addViolationAt('teamAway', 'Teams must be different!', array(), null);
+        }
     }
 }
