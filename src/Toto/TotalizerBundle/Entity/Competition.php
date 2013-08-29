@@ -5,12 +5,12 @@ namespace Toto\TotalizerBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Tournament
+ * Competition
  *
- * @ORM\Table(name="tournament")
+ * @ORM\Table(name="competition")
  * @ORM\Entity
  */
-class Tournament
+class Competition
 {
     /**
      * @var integer
@@ -28,12 +28,6 @@ class Tournament
      */
     private $name;
 
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="active", type="boolean")
-     */
-    private $active = 1;
 
     /**
      * Get id
@@ -49,7 +43,7 @@ class Tournament
      * Set name
      *
      * @param string $name
-     * @return Tournament
+     * @return Competition
      */
     public function setName($name)
     {
@@ -66,28 +60,5 @@ class Tournament
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set active
-     *
-     * @param integer $active
-     * @return Tournament
-     */
-    public function setActive($active)
-    {
-        $this->active = $active;
-    
-        return $this;
-    }
-
-    /**
-     * Get active
-     *
-     * @return integer 
-     */
-    public function getActive()
-    {
-        return (bool) $this->active;
     }
 }
