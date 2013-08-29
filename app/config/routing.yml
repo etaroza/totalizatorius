@@ -8,3 +8,5 @@ estina_core:
     type:     annotation
     prefix:   /
 
+core:
+    resource: "@TotoCoreBundle/Resources/config/routing.yml"
