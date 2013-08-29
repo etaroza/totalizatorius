@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM,
     Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Tournament
+ * Team
  *
- * @ORM\Table(name="tournament")
+ * @ORM\Table(name="team")
  * @ORM\Entity
  */
-class Tournament
+class Team
 {
     /**
      * @var integer
@@ -31,11 +31,11 @@ class Tournament
     private $name;
 
     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="active", type="boolean")
+     * @ORM\ManyToOne(targetEntity="Tournament")
+     * @ORM\JoinColumn(name="tournamend_id", referencedColumnName="id")
+     * @Assert\NotBlank()
      */
-    private $active = 1;
+    private $tournament;
 
     /**
      * Get id
@@ -51,7 +51,7 @@ class Tournament
      * Set name
      *
      * @param string $name
-     * @return Tournament
+     * @return Team
      */
     public function setName($name)
     {
@@ -71,35 +71,25 @@ class Tournament
     }
 
     /**
-     * Set active
-     *
-     * @param integer $active
-     * @return Tournament
+     * Set tournament 
+     * 
+     * @param Tournament $tournament 
+     * @return Team
      */
-    public function setActive($active)
+    public function setTournament(Tournament $tournament)
     {
-        $this->active = $active;
-    
+        $this->tournament = $tournament;
+
         return $this;
     }
 
     /**
-     * Get active
-     *
-     * @return integer 
-     */
-    public function getActive()
-    {
-        return (bool) $this->active;
-    }
-
-    /**
-     * __toString 
+     * Get tournament 
      * 
-     * @return string
+     * @return Tournament
      */
-    public function __toString()
+    public function getTournament()
     {
-        return $this->getName();
+        return $this->tournament;
     }
 }
