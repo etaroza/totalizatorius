@@ -92,4 +92,14 @@ class Team
     {
         return $this->tournament;
     }
+
+    /**
+     * __toString 
+     * 
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }
