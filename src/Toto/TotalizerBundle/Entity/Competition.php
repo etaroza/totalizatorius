@@ -2,7 +2,9 @@
 
 namespace Toto\TotalizerBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM,
+    Symfony\Component\Validator\Constraints as Assert,
+    Toto\UserBundle\Entity\User;
 
 /**
  * Competition
@@ -28,6 +30,27 @@ class Competition
      */
     private $name;
 
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToOne(targetEntity="Toto\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="admin_id", referencedColumnName="id")
+     * @Assert\NotBlank()
+     */
+    private $admin;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Toto\UserBundle\Entity\User")
+     * @ORM\JoinTable(name="competition_users",
+     *      joinColumns={@ORM\JoinColumn(name="competition_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
+     *      )
+     */
+    private $users;
+
+    public function __construct() {
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -60,5 +83,28 @@ class Competition
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Gets the value of admin
+     *
+     * @return User
+     */
+    public function getAdmin()
+    {
+        return $this->admin;
+    }
+
+    /**
+     * Sets the value of admin
+     *
+     * @param User $admin 
+     *
+     * @return Competition
+     */
+    public function setAdmin(User $admin)
+    {
+        $this->admin = $admin;
+        return $this;
     }
 }
