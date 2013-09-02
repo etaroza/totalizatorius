@@ -107,4 +107,9 @@ class Competition
         $this->admin = $admin;
         return $this;
     }
+
+    public function getUsers()
+    {
+        return $this->users;
+    }
 }
