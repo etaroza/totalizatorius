@@ -60,7 +60,7 @@ class Bid
     /**
      * @var integer
      *
-     * @ORM\Column(name="points", type="integer")
+     * @ORM\Column(name="points", type="integer", nullable=true)
      */
     private $points;
 

@@ -112,4 +112,14 @@ class Competition
     {
         return $this->users;
     }
+
+    /**
+     * __toString 
+     * 
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }
