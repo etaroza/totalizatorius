@@ -16,5 +16,16 @@ vendor: composer.phar
 migrations: vendor
 	app/console doctrine:migrations:migrate --no-interaction
 
+clearcache:
+	sudo rm -rf app/cache/* app/logs/*
+
+update: clearcache migrations
+
+fetch:
+	git fetch
+	git merge origin/master master
+
+deploy: fetch update
+
 runserver: vendor
 	app/console server:run
