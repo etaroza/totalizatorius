@@ -48,6 +48,15 @@ class Competition
      */
     private $users;
 
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToOne(targetEntity="Tournament")
+     * @ORM\JoinColumn(name="tournament_id", referencedColumnName="id")
+     * @Assert\NotBlank()
+     */
+    private $tournament;
+
     public function __construct() {
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -111,6 +120,29 @@ class Competition
     public function getUsers()
     {
         return $this->users;
+    }
+
+    /**
+     * Gets the value of Tournament
+     *
+     * @return Tournament
+     */
+    public function getTournament()
+    {
+        return $this->tournament;
+    }
+
+    /**
+     * Sets the value of Tournament
+     *
+     * @param Tournament $Tournament description
+     *
+     * @return Competition
+     */
+    public function setTournament(Tournament $tournament)
+    {
+        $this->tournament = $tournament;
+        return $this;
     }
 
     /**

@@ -16,6 +16,7 @@ class CompetitionType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('tournament')
             ->add('admin')
             ->add('users');
     }
