@@ -24,14 +24,26 @@
                 <td>{{ bid['time'] }}</td>
                 <td>{{ bid['team_h'] }}</td>
                 <td>
-                    <input type="text" value="{{ bid['bid_score_home'] }}" name="bids[{{ bid['id'] }}][home]"
-                    {% if bid['time'] < 'now'|date('Y-m-d H:i:s') %}disabled=""{% endif %}
-                    class="form-control input-sm"></td>
+                    <select name="bids[{{ bid['id'] }}][home]" 
+                        class="form-control input-sm"
+                        {% if bid['time'] < 'now'|date('Y-m-d H:i:s') %}disabled=""{% endif %}>
+                        <option value=""></option>
+                        <option value="1" {% if 1 == bid.bid_score_home %}selected{% endif %}>1-10</option>
+                        <option value="2" {% if 2 == bid.bid_score_home %}selected{% endif %}>11-20</option>
+                        <option value="3" {% if 3 == bid.bid_score_home %}selected{% endif %}>21-??</option>
+                    </select>
+                </td>
                 <td>-</td>
                 <td>
-                    <input type="text" value="{{ bid['bid_score_away'] }}" name="bids[{{ bid['id'] }}][away]"
-                    {% if bid['time'] < 'now'|date('Y-m-d H:i:s') %}disabled=""{% endif %}
-                    class="form-control input-sm"></td>
+                    <select name="bids[{{ bid['id'] }}][away]" 
+                        class="form-control input-sm"
+                        {% if bid['time'] < 'now'|date('Y-m-d H:i:s') %}disabled=""{% endif %}>
+                        <option value=""></option>
+                        <option value="1" {% if 1 == bid.bid_score_away %}selected{% endif %}>1-10</option>
+                        <option value="2" {% if 2 == bid.bid_score_away %}selected{% endif %}>11-20</option>
+                        <option value="3" {% if 3 == bid.bid_score_away %}selected{% endif %}>21-??</option>
+                    </select>
+                </td>
                 <td>{{ bid['team_a'] }}</td>
                 <td>
                     {% if bid['score_home'] and bid['score_away'] %}
