@@ -21,7 +21,7 @@
                 </div>
                 <div class="navbar-collapse collapse" id="navbar-main">
                     <ul class="nav navbar-nav">
-                        {% if is_expr_granted("hasRole('USER_ADMIN')") %}
+                        {% if is_expr_granted("hasRole('ROLE_ADMIN')") %}
                         <li><a href="{{ path('tournament') }}">Tournaments</a></li>
                         <li><a href="{{ path('team') }}">Teams</a></li>
                         <li><a href="{{ path('game') }}">Games</a></li>

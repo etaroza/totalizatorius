@@ -24,7 +24,7 @@
     </div>
 </div>
 
-    {% if is_expr_granted("hasRole('USER_ADMIN')") %}
+    {% if is_expr_granted("hasRole('ROLE_ADMIN')") %}
     <ul class="record_actions">
         <li>
             <a href="{{ path('tournament') }}">
