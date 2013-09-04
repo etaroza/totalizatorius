@@ -27,6 +27,5 @@ security:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/tournament, role: ROLE_ADMIN }
         - { path: ^/game, role: ROLE_ADMIN }
         - { path: ^/team, role: ROLE_ADMIN }
