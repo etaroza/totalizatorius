@@ -1,8 +1,5 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-<h1>Toto!!! Pew Pew!</h1>
-
-<br><br>
-<img src="http://www.dltk-kids.com/pokemon/adoptions/pikachu.gif" alt="" />
+{{ render(controller('TotoTotalizerBundle:Tournament:current')) }}
 {% endblock %}

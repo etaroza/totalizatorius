@@ -207,4 +207,20 @@ class TournamentController extends Controller
             ->getForm()
         ;
     }
+
+    /**
+     * Currently active tournaments.
+     * 
+     * @Template()
+     */
+    public function currentAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('TotoTotalizerBundle:Tournament')->findAll();
+
+        return array(
+            'entities' => $entities,
+        );
+    }
 }
