@@ -165,6 +165,7 @@ class CompetitionController extends Controller
             'delete_form' => $deleteForm->createView(),
         );
     }
+
     /**
      * Deletes a Competition entity.
      *
@@ -189,6 +190,28 @@ class CompetitionController extends Controller
         }
 
         return $this->redirect($this->generateUrl('competition'));
+    }
+
+    /**
+     * Competition stats
+     *
+     * @Route("/{slug}/stats", name="competition_stats")
+     * @Method("GET")
+     * @Template()
+     */
+    public function statsAction($slug)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('TotoTotalizerBundle:Competition')->findOneBy(['slug' => $slug]);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Competition entity.');
+        }
+
+        return [
+            'entity' => $entity
+        ];
     }
 
     /**
