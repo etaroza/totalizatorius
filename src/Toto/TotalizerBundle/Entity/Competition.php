@@ -51,7 +51,7 @@ class Competition
     /**
      * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Tournament")
+     * @ORM\ManyToOne(targetEntity="Tournament", inversedBy="competitions")
      * @ORM\JoinColumn(name="tournament_id", referencedColumnName="id")
      * @Assert\NotBlank()
      */
