@@ -26,8 +26,10 @@
                         <li><a href="{{ path('team') }}">Teams</a></li>
                         <li><a href="{{ path('game') }}">Games</a></li>
                         {% endif %}
-                        <li><a href="{{ path('competition') }}">Competitions</a></li>
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        <li><a href="{{ path('competition') }}">My Competitions</a></li>
                         <li><a href="{{ path('bid') }}">Bids</a></li>
+                        {% endif %}
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
