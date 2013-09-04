@@ -206,4 +206,20 @@ class BidController extends Controller
             ->getForm()
         ;
     }
+
+    /**
+     * Get table of bids.
+     *
+     * @Route("/competition/{competitionId}", name="bid_competition_list")
+     * @Method("GET")
+     * @Template()
+     */
+    public function competitionBidsAction($competitionId)
+    {
+        $bids = $this->get('totalizer.bid_service')->getUserBidsByCompetition($competitionId);
+
+        return array(
+            'bids' => $bids,
+        );
+    }
 }
