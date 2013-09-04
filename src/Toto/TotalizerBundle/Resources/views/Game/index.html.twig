@@ -3,43 +3,39 @@
 {% block body -%}
     <h1>Game list</h1>
 
-    <table class="records_list">
+    <p><a class="btn btn-default" type="button" href="{{ path('game_new') }}">Create new</a></p>
+
+    <table class="table table-striped table-bordered table-hover">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Time</th>
-                <th>Scorehome</th>
-                <th>Scoreaway</th>
+                <th>Home</th>
+                <th>Away</th>
+                <th>Score</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('game_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{% if entity.time %}{{ entity.time|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ entity.scoreHome }}</td>
-                <td>{{ entity.scoreAway }}</td>
+                <td>{% if entity.time %}{{ entity.time|date('Y-m-d H:i') }}{% endif %}</td>
+                <td>{{ entity.teamHome}}</td>
+                <td>{{ entity.teamAway}}</td>
                 <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('game_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('game_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                    {% if entity.scoreHome %}
+                    {{ entity.scoreHome }}:{{ entity.scoreAway }}
+                    {% else %}
+                    -
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('game_edit', { 'id': entity.id }) }}">edit</a>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-        <ul>
-        <li>
-            <a href="{{ path('game_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
+    <p><a class="btn btn-default" type="button" href="{{ path('game_new') }}">Create new</a></p>
+
     {% endblock %}
