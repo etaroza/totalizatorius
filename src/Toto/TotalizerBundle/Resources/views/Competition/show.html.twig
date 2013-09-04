@@ -2,4 +2,6 @@
 
 {% block content -%}
 
+{{ render(controller('TotoTotalizerBundle:Bid:competitionBids', { 'competitionId': entity.id })) }}
+
 {% endblock %}

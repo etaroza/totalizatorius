@@ -3,6 +3,7 @@
 namespace Toto\TotalizerBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -210,7 +211,7 @@ class BidController extends Controller
     /**
      * Get table of bids.
      *
-     * @Route("/competition/{competitionId}", name="bid_competition_list")
+     * @Route("/competition/{competitionId}", name="competition_bids")
      * @Template()
      */
     public function competitionBidsAction($competitionId)
@@ -219,12 +220,22 @@ class BidController extends Controller
         $request = $this->get('request');
         if ('POST' === $request->getMethod()) {
             $this->get('totalizer.bid_service')->updateBids($competitionId, $request);
+
+            $referer = $request->headers->get('referer');
+            return new RedirectResponse($referer);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $competition = $em->getRepository('TotoTotalizerBundle:Competition')->find($competitionId);
+        if (!$competition) {
+            throw $this->createNotFoundException('Unable to find Competition entity.');
         }
 
         $bids = $this->get('totalizer.bid_service')->getUserBidsByCompetition($competitionId);
 
         return array(
             'bids' => $bids,
+            'competition' => $competition
         );
     }
 }
