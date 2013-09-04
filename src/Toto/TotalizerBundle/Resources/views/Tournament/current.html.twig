@@ -1,0 +1,22 @@
+<div id="banner" class="page-header">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Tournaments</h1>
+        </div>
+    </div>
+</div>
+
+<div class="bs-docs-section">
+    <div class="row">
+        <div class="col-lg-12">
+            {% for entity in entities %}
+                <blockquote>
+                    <p>
+                        <a href="{{ path('tournament_show', { 'id': entity.id }) }}">{{ entity.name }}</a>
+                    </p>
+                    <small>{{ entity.competitions|length }} competition (-s)</small>
+                </blockquote>
+            {% endfor %}
+        </div>
+    </div>
+</div>

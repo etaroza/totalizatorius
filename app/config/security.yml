@@ -1,3 +1,7 @@
+jms_security_extra:
+    secure_all_services: false
+    expressions: true
+
 security:
     encoders:
         FOS\UserBundle\Model\UserInterface: sha512
@@ -26,3 +30,5 @@ security:
         - { path: ^/competition, role: ROLE_USER }
         - { path: ^/bid, role: ROLE_USER }
         - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/game, role: ROLE_ADMIN }
+        - { path: ^/team, role: ROLE_ADMIN }

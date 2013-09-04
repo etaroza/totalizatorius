@@ -38,6 +38,16 @@ class Tournament
     private $active = 1;
 
     /**
+     * @ORM\OneToMany(targetEntity="Competition", mappedBy="tournament")
+     */
+    private $competitions;
+
+    public function __construct()
+    {
+        $this->competitions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return integer 
@@ -101,5 +111,15 @@ class Tournament
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * getCompetitions 
+     * 
+     * @return ArrayCollection<Competition>
+     */
+    public function getCompetitions()
+    {
+        return $this->competitions;
     }
 }
