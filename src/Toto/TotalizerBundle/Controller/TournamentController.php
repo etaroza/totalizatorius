@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Toto\TotalizerBundle\Entity\Tournament;
 use Toto\TotalizerBundle\Form\TournamentType;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 
 /**
  * Tournament controller.
