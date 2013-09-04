@@ -21,11 +21,14 @@ framework:
     trusted_proxies: ~
     session:         ~
     fragments:       ~
-
+    
 # Twig Configuration
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
+    form:
+        resources:
+            - 'TotoCoreBundle:Form:fields.html.twig'
 
 # Assetic Configuration
 assetic:
