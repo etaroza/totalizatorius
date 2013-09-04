@@ -211,11 +211,16 @@ class BidController extends Controller
      * Get table of bids.
      *
      * @Route("/competition/{competitionId}", name="bid_competition_list")
-     * @Method("GET")
      * @Template()
      */
     public function competitionBidsAction($competitionId)
     {
+        /* @var $request \Symfony\Component\HttpFoundation\Request */
+        $request = $this->get('request');
+        if ('POST' === $request->getMethod()) {
+            $this->get('totalizer.bid_service')->updateBids($competitionId, $request);
+        }
+
         $bids = $this->get('totalizer.bid_service')->getUserBidsByCompetition($competitionId);
 
         return array(

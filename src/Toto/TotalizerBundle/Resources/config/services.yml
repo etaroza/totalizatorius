@@ -6,4 +6,8 @@ services:
         arguments: ['@doctrine', '@user.user_service']
     totalizer.bid_service:
         class: Toto\TotalizerBundle\Service\Bid
-        arguments: ['@doctrine', '@user.user_service']
+        arguments: ['@doctrine', '@user.user_service', '@totalizer.competition_service', '@totalizer.game_service']
+    totalizer.game_service:
+        class: Toto\TotalizerBundle\Service\Game
+        arguments: ['@doctrine']
+
