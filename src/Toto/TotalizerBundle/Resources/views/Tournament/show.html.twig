@@ -15,7 +15,7 @@
             {% for item in entity.competitions %}
                 <blockquote>
                     <p>
-                        <a href="{{ path('competition_show', { 'id': item.id }) }}">{{ item.name }}</a>
+                        <a href="{{ path('competition_show', { 'slug': item.slug }) }}">{{ item.name }}</a>
                     </p>
                     <small>{{ item.users|length }} user (-s)</small>
                 </blockquote>

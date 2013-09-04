@@ -52,7 +52,7 @@ class CompetitionController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('competition_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('competition_show', array('slug' => $entity->getSlug())));
         }
 
         return array(
@@ -82,21 +82,21 @@ class CompetitionController extends Controller
     /**
      * Finds and displays a Competition entity.
      *
-     * @Route("/{id}", name="competition_show")
+     * @Route("/{slug}", name="competition_show")
      * @Method("GET")
      * @Template()
      */
-    public function showAction($id)
+    public function showAction($slug)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('TotoTotalizerBundle:Competition')->find($id);
+        $entity = $em->getRepository('TotoTotalizerBundle:Competition')->findOneBy(['slug' => $slug]);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Competition entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($entity->getId());
 
         return array(
             'entity'      => $entity,

@@ -4,7 +4,8 @@ namespace Toto\TotalizerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM,
     Symfony\Component\Validator\Constraints as Assert,
-    Toto\UserBundle\Entity\User;
+    Toto\UserBundle\Entity\User,
+    Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Competition
@@ -56,6 +57,12 @@ class Competition
      * @Assert\NotBlank()
      */
     private $tournament;
+
+    /**
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(length=255, unique=true)
+     */
+    private $slug;
 
     public function __construct() {
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
@@ -142,6 +149,29 @@ class Competition
     public function setTournament(Tournament $tournament)
     {
         $this->tournament = $tournament;
+        return $this;
+    }
+
+    /**
+     * Gets the value of Slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Sets the value of Slug
+     *
+     * @param Slug $Slug description
+     *
+     * @return Competition
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
         return $this;
     }
 
