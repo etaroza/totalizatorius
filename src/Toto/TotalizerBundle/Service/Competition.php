@@ -53,4 +53,16 @@ class Competition
 
         return $qb->getQuery()->getResult();
     }
+
+    /**
+     * getCompetitionById 
+     *
+     * @param int $id competition id
+     *
+     * @return Competition
+     */
+    public function getCompetitionById($id)
+    {
+        return $this->repo->find($id);
+    }
 }
