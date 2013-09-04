@@ -71,4 +71,25 @@ class Bid
 
         return $result;
     }
+
+    /**
+     * Return grouped stats from bids table.
+     * 
+     * @param int $competitionId 
+     * @return array
+     */
+    public function getStats($competitionId)
+    {
+        $dql = "SELECT b, SUM( b.points ) AS total
+            FROM  Toto\\TotalizerBundle\\Entity\\Bid b
+            WHERE b.competition = :competitionId
+            GROUP BY b.user
+            ORDER BY total DESC";
+
+        $result = $this->em->createQuery($dql)
+                      ->setParameter(':competitionId', $competitionId)
+                      ->getResult();
+
+        return $result;
+    }
 }

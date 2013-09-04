@@ -209,8 +209,12 @@ class CompetitionController extends Controller
             throw $this->createNotFoundException('Unable to find Competition entity.');
         }
 
+        $bidService = $this->get('totalizer.bid_service');
+        $stats = $bidService->getStats($entity->getId());
+
         return [
-            'entity' => $entity
+            'entity' => $entity,
+            'stats' => $stats
         ];
     }
 

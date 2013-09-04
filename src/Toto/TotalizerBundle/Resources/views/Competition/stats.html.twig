@@ -9,4 +9,21 @@
         </div>
     </div>
 </div>
+
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Total points</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in stats %}
+        <tr>
+            <td>{{ entity.0.user }}</td>
+            <td>{{ entity.total }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
 {% endblock %}
