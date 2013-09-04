@@ -1,6 +1,6 @@
 parameters:
 
 services:
-    user_service:
-        class: Toto\UserBundle\User
-        arguments: [security.context]
+    user.user_service:
+        class: Toto\UserBundle\Service\User
+        arguments: ['@security.context']

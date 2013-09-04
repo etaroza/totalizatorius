@@ -27,14 +27,13 @@ class CompetitionController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('TotoTotalizerBundle:Competition')->findAll();
+        $entities = $this->get('totalizer.competition_service')->getUserCompetitions();
 
         return array(
             'entities' => $entities,
         );
     }
+
     /**
      * Creates a new Competition entity.
      *
