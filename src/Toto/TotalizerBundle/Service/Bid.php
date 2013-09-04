@@ -117,11 +117,13 @@ class Bid
         foreach ($games as $gameId => $teamScore) {
             $game = $this->gameService->getGameById($gameId);
 
-            $bid = $this->getBid($currentUser, $competition, $game);
-            $bid->setScoreHome($teamScore['home']);
-            $bid->setScoreAway($teamScore['away']);
-
-            $this->em->persist($bid);
+            //Update only not started games.
+            if ($game->getTime() > new \DateTime) {
+                $bid = $this->getBid($currentUser, $competition, $game);
+                $bid->setScoreHome($teamScore['home']);
+                $bid->setScoreAway($teamScore['away']);
+                $this->em->persist($bid);
+            }
         }
         $this->em->flush();
     }
