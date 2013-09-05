@@ -18,3 +18,11 @@ services:
             - @totalizer.team_service
             - %toto_import_cache%
 
+    toto_import.misc_importer.eurobasket2013:
+        class: Toto\ImportBundle\MiscImporter\Eurobasket2013Importer
+        arguments: 
+            - @totalizer.game_service
+            - @totalizer.tournament_service
+            - @totalizer.team_service
+            - %toto_import_cache%
+

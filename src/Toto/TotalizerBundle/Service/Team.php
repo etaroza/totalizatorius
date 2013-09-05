@@ -42,4 +42,17 @@ class Team
             'code' => $code,
         ));
     }
+
+    public function updateLogo(Entity\Team $team, $logo)
+    {
+        // @TODO download logo, store locally
+        $team->setLogo($logo);
+
+        $this->em->persist($team);
+    }
+
+    public function save()
+    {
+        $this->em->flush();
+    }
 }
