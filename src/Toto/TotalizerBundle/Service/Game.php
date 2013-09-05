@@ -2,6 +2,8 @@
 
 namespace Toto\TotalizerBundle\Service;
 
+use Toto\TotalizerBundle\Entity;
+
 /**
  * Service for game operations
  */
@@ -43,6 +45,26 @@ class Game
         return $this->repo->find($id);
     }
 
+    public function createNew($time, $teams)
+    {
+        $game = $this->repo->findOneBy(array(
+            'teamHome' => $teams['home'],
+            'teamAway' => $teams['away'],
+            'time' => $time,
+        ));
+
+        if ($game) {
+            return false;
+        }
+
+        $game = new Entity\Game();
+        $game->setTeamHome($teams['home']);
+        $game->setTeamAway($teams['away']);
+        $game->setTime($time);
+
+        $this->em->persist($game);
+    }
+
     public function updateScore($time, $teams, $scores)
     {
         $game = $this->repo->findOneBy(array(
@@ -65,7 +87,7 @@ class Game
         $this->em->persist($game);
     }
 
-    public function updateScoreFlush()
+    public function save()
     {
         $this->em->flush();
     }

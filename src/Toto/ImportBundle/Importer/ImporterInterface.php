@@ -1,5 +1,5 @@
 <?php
-namespace Toto\ImportBundle\ResultImporter;
+namespace Toto\ImportBundle\Importer;
 
 interface ImporterInterface
 {

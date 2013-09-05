@@ -1,5 +1,5 @@
 <?php
-namespace Toto\ImportBundle\ResultImporter;
+namespace Toto\ImportBundle\GameImporter;
 
 use Doctrine\ORM\EntityManager;
 use Toto\TotalizerBundle\Service\Game;
@@ -8,6 +8,7 @@ use Toto\TotalizerBundle\Service\Team;
 
 use Toto\ImportBundle\Importer\ImporterInterface;
 use Toto\ImportBundle\Importer\AbstractImporter;
+
 
 class Eurobasket2013Importer extends AbstractImporter implements ImporterInterface
 {
@@ -74,16 +75,7 @@ class Eurobasket2013Importer extends AbstractImporter implements ImporterInterfa
         $return = array();
         $response = json_decode($response);
 
-        if (!isset($response->games)) {
-            throw new \RuntimeException('Could not parse response');
-        }
-
         foreach ($response->games as $game) {
-
-            // grab only finished games
-            if ($game->status != 2) {
-                continue;
-            }
 
             $date = new \DateTime();
             $date->setTimestamp(strtotime($game->strDate . ' ' . $game->strTime));
@@ -105,10 +97,6 @@ class Eurobasket2013Importer extends AbstractImporter implements ImporterInterfa
                     'home' => $homeTeam,
                     'away' => $awayTeam
                 ),
-                'score' => array(
-                    'home' => $homeTeamScore,
-                    'away' => $awayTeamScore,
-                ),
             );
         }
 
@@ -118,7 +106,7 @@ class Eurobasket2013Importer extends AbstractImporter implements ImporterInterfa
     private function store(array $data)
     {
         foreach ($data as $item) {
-            $this->gameService->updateScore($item['time'], $item['team'], $item['score']);
+            $this->gameService->createNew($item['time'], $item['team']);
         }
 
         $this->gameService->save();
