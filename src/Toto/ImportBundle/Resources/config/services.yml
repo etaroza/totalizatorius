@@ -1,0 +1,11 @@
+parameters:
+
+services:
+    toto_import.result_importer.eurobasket2013:
+        class: Toto\ImportBundle\ResultImporter\Eurobasket2013Importer
+        arguments: 
+            - @totalizer.game_service
+            - @totalizer.tournament_service
+            - @totalizer.team_service
+            - %kernel.cache_dir%/toto_import
+

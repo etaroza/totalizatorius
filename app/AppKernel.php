@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new Toto\CoreBundle\TotoCoreBundle(),
             new Toto\TotalizerBundle\TotoTotalizerBundle(),
             new Toto\UserBundle\TotoUserBundle(),
+            new Toto\ImportBundle\TotoImportBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

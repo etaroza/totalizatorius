@@ -42,4 +42,31 @@ class Game
     {
         return $this->repo->find($id);
     }
+
+    public function updateScore($time, $teams, $scores)
+    {
+        $game = $this->repo->findOneBy(array(
+            'teamHome' => $teams['home'],
+            'teamAway' => $teams['away'],
+            'time' => $time,
+        ));
+
+        if (!$game) {
+            return false;
+        }
+
+        if ($game->getScoreHome() || $game->getScoreAway()) {
+            return false;
+        }
+
+        $game->setScoreHome($scores['home']);
+        $game->setScoreAway($scores['away']);
+
+        $this->em->persist($game);
+    }
+
+    public function updateScoreFlush()
+    {
+        $this->em->flush();
+    }
 }
