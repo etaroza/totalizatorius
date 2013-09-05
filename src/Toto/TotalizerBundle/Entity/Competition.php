@@ -2,7 +2,10 @@
 
 namespace Toto\TotalizerBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM,
+    Symfony\Component\Validator\Constraints as Assert,
+    Toto\UserBundle\Entity\User,
+    Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Competition
@@ -28,6 +31,42 @@ class Competition
      */
     private $name;
 
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToOne(targetEntity="Toto\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="admin_id", referencedColumnName="id")
+     * @Assert\NotBlank()
+     */
+    private $admin;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Toto\UserBundle\Entity\User")
+     * @ORM\JoinTable(name="competition_users",
+     *      joinColumns={@ORM\JoinColumn(name="competition_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
+     *      )
+     */
+    private $users;
+
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToOne(targetEntity="Tournament", inversedBy="competitions")
+     * @ORM\JoinColumn(name="tournament_id", referencedColumnName="id")
+     * @Assert\NotBlank()
+     */
+    private $tournament;
+
+    /**
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(length=255, unique=true)
+     */
+    private $slug;
+
+    public function __construct() {
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -60,5 +99,89 @@ class Competition
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Gets the value of admin
+     *
+     * @return User
+     */
+    public function getAdmin()
+    {
+        return $this->admin;
+    }
+
+    /**
+     * Sets the value of admin
+     *
+     * @param User $admin 
+     *
+     * @return Competition
+     */
+    public function setAdmin(User $admin)
+    {
+        $this->admin = $admin;
+        return $this;
+    }
+
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     * Gets the value of Tournament
+     *
+     * @return Tournament
+     */
+    public function getTournament()
+    {
+        return $this->tournament;
+    }
+
+    /**
+     * Sets the value of Tournament
+     *
+     * @param Tournament $Tournament description
+     *
+     * @return Competition
+     */
+    public function setTournament(Tournament $tournament)
+    {
+        $this->tournament = $tournament;
+        return $this;
+    }
+
+    /**
+     * Gets the value of Slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Sets the value of Slug
+     *
+     * @param Slug $Slug description
+     *
+     * @return Competition
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+        return $this;
+    }
+
+    /**
+     * __toString 
+     * 
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
     }
 }

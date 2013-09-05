@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Toto\TotalizerBundle\Entity\Tournament;
 use Toto\TotalizerBundle\Form\TournamentType;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 
 /**
  * Tournament controller.
@@ -24,6 +25,7 @@ class TournamentController extends Controller
      * @Route("/", name="tournament")
      * @Method("GET")
      * @Template()
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function indexAction()
     {
@@ -41,6 +43,7 @@ class TournamentController extends Controller
      * @Route("/", name="tournament_create")
      * @Method("POST")
      * @Template("TotoTotalizerBundle:Tournament:new.html.twig")
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function createAction(Request $request)
     {
@@ -68,6 +71,7 @@ class TournamentController extends Controller
      * @Route("/new", name="tournament_new")
      * @Method("GET")
      * @Template()
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function newAction()
     {
@@ -111,6 +115,7 @@ class TournamentController extends Controller
      * @Route("/{id}/edit", name="tournament_edit")
      * @Method("GET")
      * @Template()
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function editAction($id)
     {
@@ -138,6 +143,7 @@ class TournamentController extends Controller
      * @Route("/{id}", name="tournament_update")
      * @Method("PUT")
      * @Template("TotoTotalizerBundle:Tournament:edit.html.twig")
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function updateAction(Request $request, $id)
     {
@@ -171,6 +177,7 @@ class TournamentController extends Controller
      *
      * @Route("/{id}", name="tournament_delete")
      * @Method("DELETE")
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function deleteAction(Request $request, $id)
     {
@@ -205,5 +212,21 @@ class TournamentController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+
+    /**
+     * Currently active tournaments.
+     * 
+     * @Template()
+     */
+    public function currentAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('TotoTotalizerBundle:Tournament')->findAll();
+
+        return array(
+            'entities' => $entities,
+        );
     }
 }

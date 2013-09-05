@@ -1,0 +1,64 @@
+<div class="bs-example">
+    <form class="bs-example form-horizontal" method="POST" action="{{ path('competition_bids', { 'competitionId': competition.id }) }}">
+        <div class="form-group">
+            <div class="col-lg-12">
+                <button class="btn btn-primary" type="submit">Save all bids</button> 
+            </div>
+        </div>
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Team</th>
+                    <th>Results</th>
+                    <th>-</th>
+                    <th>Results</th>
+                    <th>Team</th>
+                    <th>Result of game</th>
+                    <th>Points</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for bid in bids %}
+            <tr>
+                <td>{{ bid['time'] }}</td>
+                <td>{{ bid['team_h'] }}</td>
+                <td>
+                    <select name="bids[{{ bid['id'] }}][home]" 
+                        class="form-control input-sm"
+                        {% if bid['time'] < 'now'|date('Y-m-d H:i:s') %}disabled=""{% endif %}>
+                        <option value=""></option>
+                        <option value="1" {% if 1 == bid.bid_score_home %}selected{% endif %}>1-10</option>
+                        <option value="2" {% if 2 == bid.bid_score_home %}selected{% endif %}>11-20</option>
+                        <option value="3" {% if 3 == bid.bid_score_home %}selected{% endif %}>21-??</option>
+                    </select>
+                </td>
+                <td>-</td>
+                <td>
+                    <select name="bids[{{ bid['id'] }}][away]" 
+                        class="form-control input-sm"
+                        {% if bid['time'] < 'now'|date('Y-m-d H:i:s') %}disabled=""{% endif %}>
+                        <option value=""></option>
+                        <option value="1" {% if 1 == bid.bid_score_away %}selected{% endif %}>1-10</option>
+                        <option value="2" {% if 2 == bid.bid_score_away %}selected{% endif %}>11-20</option>
+                        <option value="3" {% if 3 == bid.bid_score_away %}selected{% endif %}>21-??</option>
+                    </select>
+                </td>
+                <td>{{ bid['team_a'] }}</td>
+                <td>
+                    {% if bid['score_home'] and bid['score_away'] %}
+                        {{ bid['score_home'] }}-{{ bid['score_away'] }}
+                    {% endif %}
+                </td>
+                <td>{{ bid['points'] }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="form-group">
+            <div class="col-lg-12">
+                <button class="btn btn-primary" type="submit">Save all bids</button> 
+            </div>
+        </div>
+    </form>
+</div>

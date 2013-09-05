@@ -1,0 +1,19 @@
+parameters:
+
+services:
+    totalizer.competition_service:
+        class: Toto\TotalizerBundle\Service\Competition
+        arguments: ['@doctrine', '@user.user_service']
+    totalizer.bid_service:
+        class: Toto\TotalizerBundle\Service\Bid
+        arguments: ['@doctrine', '@user.user_service', '@totalizer.competition_service', '@totalizer.game_service']
+    totalizer.game_service:
+        class: Toto\TotalizerBundle\Service\Game
+        arguments: ['@doctrine']
+    totalizer.tournament_service:
+        class: Toto\TotalizerBundle\Service\Tournament
+        arguments: ['@doctrine.orm.entity_manager']
+    totalizer.team_service:
+        class: Toto\TotalizerBundle\Service\Team
+        arguments: ['@doctrine.orm.entity_manager']
+

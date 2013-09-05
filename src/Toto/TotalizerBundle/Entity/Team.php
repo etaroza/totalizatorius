@@ -31,6 +31,21 @@ class Team
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="code", type="string", length=10)
+     * @Assert\NotBlank()
+     */
+    private $code;    
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="logo", type="string", length=255)
+     */
+    private $logo;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Tournament")
      * @ORM\JoinColumn(name="tournamend_id", referencedColumnName="id")
      * @Assert\NotBlank()
@@ -101,5 +116,51 @@ class Team
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * Set code
+     *
+     * @param string $code
+     * @return Team
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+    
+        return $this;
+    }
+
+    /**
+     * Get code
+     *
+     * @return string 
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * Set logo
+     *
+     * @param string $logo
+     * @return Team
+     */
+    public function setLogo($logo)
+    {
+        $this->logo = $logo;
+    
+        return $this;
+    }
+
+    /**
+     * Get logo
+     *
+     * @return string 
+     */
+    public function getLogo()
+    {
+        return $this->logo;
     }
 }

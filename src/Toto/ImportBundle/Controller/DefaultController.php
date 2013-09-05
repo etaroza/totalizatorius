@@ -1,6 +1,6 @@
 <?php
 
-namespace Toto\TotalizerBundle\Controller;
+namespace Toto\ImportBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

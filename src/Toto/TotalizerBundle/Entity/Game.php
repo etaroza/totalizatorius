@@ -53,14 +53,14 @@ class Game
     /**
      * @var integer
      *
-     * @ORM\Column(name="score_home", type="integer")
+     * @ORM\Column(name="score_home", type="integer", nullable=true)
      */
     private $scoreHome;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="score_away", type="integer")
+     * @ORM\Column(name="score_away", type="integer", nullable=true)
      */
     private $scoreAway;
 
@@ -200,5 +200,10 @@ class Game
         if ($this->getTeamHome() == $this->getTeamAway()) {
             $context->addViolationAt('teamAway', 'Teams must be different!', array(), null);
         }
+    }
+
+    public function __toString()
+    {
+        return sprintf("%s vs. %s", $this->teamHome, $this->teamAway);
     }
 }

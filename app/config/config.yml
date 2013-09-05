@@ -1,6 +1,7 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
+    - { resource: doctrine_extensions.yml }
 
 framework:
     #esi:             ~
@@ -14,16 +15,21 @@ framework:
     validation:      { enable_annotations: true }
     templating:
         engines: ['twig']
+        form:
+            resources: ['TotoUserBundle:Form']
         #assets_version: SomeVersionScheme
     default_locale:  "%locale%"
     trusted_proxies: ~
     session:         ~
     fragments:       ~
-
+    
 # Twig Configuration
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
+    form:
+        resources:
+            - 'TotoCoreBundle:Form:fields.html.twig'
 
 # Assetic Configuration
 assetic:

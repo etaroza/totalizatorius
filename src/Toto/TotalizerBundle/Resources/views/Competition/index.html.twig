@@ -1,0 +1,28 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+<div id="banner" class="page-header">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Competitions</h1>
+            <p>Choose your competition or create new one.</p>
+        </div>
+    </div>
+</div>
+
+<div class="bs-docs-section">
+    <div class="row">
+        <div class="col-lg-12">
+            <p><a class="btn btn-default" type="button" href="{{ path('competition_new') }}">Create new</a></p>
+            {% for entity in entities %}
+                <blockquote>
+                    <p>
+                        <a href="{{ path('competition_show', { 'slug': entity.slug }) }}">{{ entity.name }}</a>
+                    </p>
+                    <small>{{ entity.tournament.name }}</small>
+                </blockquote>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
