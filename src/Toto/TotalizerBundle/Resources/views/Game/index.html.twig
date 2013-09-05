@@ -19,8 +19,14 @@
         {% for entity in entities %}
             <tr>
                 <td>{% if entity.time %}{{ entity.time|date('Y-m-d H:i') }}{% endif %}</td>
-                <td>{{ entity.teamHome}}</td>
-                <td>{{ entity.teamAway}}</td>
+                <td>
+                    <img src="{{ entity.teamHome.logo }}" alt="{{ entity.teamHome.code }}"> 
+                    {{ entity.teamHome}}
+                </td>
+                <td>
+                    {{ entity.teamAway}}
+                    <img src="{{ entity.teamAway.logo }}" alt="{{ entity.teamAway.code }}"> 
+                </td>
                 <td>
                     {% if entity.scoreHome %}
                     {{ entity.scoreHome }}:{{ entity.scoreAway }}

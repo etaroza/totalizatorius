@@ -53,10 +53,19 @@ class Bid
     public function getUserBidsByCompetition($competitionId)
     {
         $currentUser = $this->userService->getCurrentUser();
-
+        // @TODO join and return full team entity instead of team_*
+        
         $conn = $this->em->getConnection();
-        $query = "SELECT g.*, b.id AS bid_id, b.score_home AS bid_score_home, b.score_away AS bid_score_away, b.points,
-                th.name as team_h, ta.name as team_a
+        $query = "SELECT g.*, 
+                b.id AS bid_id, 
+                b.score_home AS bid_score_home, 
+                b.score_away AS bid_score_away, b.points,
+                th.name as team_h, 
+                th.logo as team_h_logo, 
+                th.code as team_h_code, 
+                ta.name as team_a,
+                ta.logo as team_a_logo,
+                ta.code as team_a_code
             FROM game g
             LEFT JOIN team th ON g.team_home = th.id
             LEFT JOIN team ta ON g.team_away = ta.id

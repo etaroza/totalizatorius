@@ -22,7 +22,10 @@
             {% for bid in bids %}
             <tr>
                 <td>{{ bid['time'] }}</td>
-                <td>{{ bid['team_h'] }}</td>
+                <td>
+                    {{ bid.team_h }}
+                    <img src="{{ bid.team_h_logo }}" alt="{{ bid.team_h_code }}" align="right"> 
+                </td>
                 <td>
                     <select name="bids[{{ bid['id'] }}][home]" 
                         class="form-control input-sm"
@@ -44,7 +47,10 @@
                         <option value="3" {% if 3 == bid.bid_score_away %}selected{% endif %}>21-??</option>
                     </select>
                 </td>
-                <td>{{ bid['team_a'] }}</td>
+                <td style="text-align: right;">
+                    <img src="{{ bid.team_a_logo }}" alt="{{ bid.team_a_code }}" align="left">
+                    {{ bid.team_a }} 
+                </td>
                 <td>
                     {% if bid['score_home'] and bid['score_away'] %}
                         {{ bid['score_home'] }}-{{ bid['score_away'] }}
