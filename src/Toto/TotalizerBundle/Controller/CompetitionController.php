@@ -79,6 +79,30 @@ class CompetitionController extends Controller
         );
     }
 
+    
+    /**
+     * Competition update points
+     *
+     * @Route("/updatepoints", name="competition_updatepoints")
+     * @Method("GET")
+     * @Template()
+     */
+    public function updatePointsAction()
+    {
+        $bidService = $this->get('totalizer.bid_service');
+        $bids = $bidService->getEmptyBids();
+        
+        if(!empty($bids)){
+            foreach($bids as $bid){
+                $points = $bidService->countPoints($bid);
+                $bidService->updatePoints($bid['bid_id'], $points);
+            }
+        }
+        
+        echo 'done'; die;
+    }
+    
+    
     /**
      * Finds and displays a Competition entity.
      *
@@ -208,7 +232,8 @@ class CompetitionController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Competition entity.');
         }
-
+        
+       
         $bidService = $this->get('totalizer.bid_service');
         $stats = $bidService->getStats($entity->getId());
 

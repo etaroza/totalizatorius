@@ -153,4 +153,57 @@ class Bid
 
         return $bid;
     }
+    
+    public function getEmptyBids()
+    {
+        $conn = $this->em->getConnection();
+        $query = "SELECT b.id bid_id, g.score_home result_home, g.score_away result_away, b.score_home bid_home, b.score_away bid_away
+            FROM  bid b
+            LEFT JOIN game g
+                ON b.game_id = g.id 
+            WHERE b.points IS NULL
+                AND g.score_home IS NOT NULL";
+
+        $statement = $conn->prepare($query);
+        $statement->execute();
+
+        $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
+        
+        return $result;
+    }
+    
+    private function countPrecision($result1, $result2, $bid)
+    {
+        if(($result1 - $result2) < 11 && $bid == 1){
+            return 3;
+        }elseif(($result1 - $result2) < 21 && ($result1 - $result2) > 10 && $bid == 2){
+            return 3;
+        }elseif(($result1 - $result2) > 20 && $bid == 3){
+            return 3;
+        }else{
+            return 1;
+        }
+    }
+    
+    public function countPoints($bid)
+    {
+        if($bid['result_home'] > $bid['result_away'] && $bid['bid_home'] > 0){
+            return $this->countPrecision($bid['result_home'], $bid['result_away'], $bid['bid_home']);
+        }elseif($bid['result_home'] < $bid['result_away'] && $bid['bid_away'] > 0){
+            return $this->countPrecision($bid['result_away'], $bid['result_home'], $bid['bid_away']);
+        }else{
+            return 0;
+        }
+    }
+    
+    public function updatePoints($bidId, $points){
+        $conn = $this->em->getConnection();
+        $query = "UPDATE bid SET points = :points WHERE id = :bidId";
+
+        $statement = $conn->prepare($query);
+        $statement->bindValue(':points', $points, \PDO::PARAM_INT);
+        $statement->bindValue(':bidId', $bidId, \PDO::PARAM_INT);
+        return $statement->execute();
+        
+    }
 }
