@@ -72,10 +72,9 @@ class Bid
             LEFT JOIN competition c ON c.tournament_id = t.id
             LEFT JOIN bid b ON b.competition_id = c.id
                 AND b.game_id = g.id
-                AND b.user_id = :userId AND %s
-            WHERE c.id = :competitionId
+                AND b.user_id = :userId 
+            WHERE c.id = :competitionId AND %s
             ORDER BY g.time ASC", implode(' AND ', $where));
-var_dump($query); die();
 
         $statement = $conn->prepare($query);
         $statement->bindValue(':competitionId', $competitionId, \PDO::PARAM_INT);

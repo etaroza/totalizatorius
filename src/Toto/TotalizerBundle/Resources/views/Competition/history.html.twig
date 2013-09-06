@@ -1,0 +1,6 @@
+{% extends 'TotoTotalizerBundle:Competition:layout.html.twig' %}
+
+{% block content -%}
+<h2>Bids history</h2>
+{{ render(controller('TotoTotalizerBundle:Bid:competitionBids', { 'competitionId': entity.id, 'past': true })) }}
+{% endblock %}

@@ -236,12 +236,11 @@ class BidController extends Controller
 
         $until = $since = null;
         if ($past) {
-            $until = new \DateTime(date("Y-m-d") . ' 00:00:00');
+            $until = new \DateTime;
         } else {
             $since = new \DateTime(date("Y-m-d") . ' 00:00:00');
         }
 
-        var_dump($since); die();
         $bids = $this->get('totalizer.bid_service')
             ->getUserBidsByCompetition($competitionId, $since, $until);
 
