@@ -131,7 +131,7 @@ class CompetitionController extends Controller
     
     /**
      *
-     * @Route("/{slug}/{userId}", name="competition_user_stats")
+     * @Route("/{slug}/userstats/{userId}", name="competition_user_stats")
      * @Template("TotoTotalizerBundle:Bid:competitionStats.html.twig")
      */
     public function competitionStatsAction($slug, $userId)
