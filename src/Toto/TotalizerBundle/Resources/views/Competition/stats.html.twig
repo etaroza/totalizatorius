@@ -9,10 +9,10 @@
         </tr>
     </thead>
     <tbody>
-    {% for entity in stats %}
+    {% for user in stats %}
         <tr>
-            <td>{{ entity.0.user }}</td>
-            <td>{{ entity.total }}</td>
+            <td><a href="{{ path('competition_user_stats', { 'slug': entity.slug, 'userId': user.0.getUser().getId()  }) }}">{{ user.0.user }}</a></td>
+            <td>{{ user.total }}</td>
         </tr>
     {% endfor %}
     </tbody>

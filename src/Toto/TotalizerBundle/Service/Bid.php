@@ -50,9 +50,12 @@ class Bid
      *
      * @return array
      */
-    public function getUserBidsByCompetition($competitionId)
+    public function getUserBidsByCompetition($competitionId, $userId = null)
     {
-        $currentUser = $this->userService->getCurrentUser();
+        if($userId == null){
+            $currentUser = $this->userService->getCurrentUser();
+            $userId = $currentUser->getId();
+        }
         // @TODO join and return full team entity instead of team_*
         
         $conn = $this->em->getConnection();
@@ -79,7 +82,7 @@ class Bid
 
         $statement = $conn->prepare($query);
         $statement->bindValue(':competitionId', $competitionId, \PDO::PARAM_INT);
-        $statement->bindValue(':userId', $currentUser->getId(), \PDO::PARAM_INT);
+        $statement->bindValue(':userId', $userId, \PDO::PARAM_INT);
         $statement->execute();
 
         $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
@@ -105,7 +108,7 @@ class Bid
         $result = $this->em->createQuery($dql)
                       ->setParameter(':competitionId', $competitionId)
                       ->getResult();
-
+        
         return $result;
     }
 
