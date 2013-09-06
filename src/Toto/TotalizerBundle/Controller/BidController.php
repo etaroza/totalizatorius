@@ -211,10 +211,13 @@ class BidController extends Controller
     /**
      * Get table of bids.
      *
+     * @param int  $competitionId Competition id
+     * @param bool $past          Collect only past games
+     *
      * @Route("/competition/{competitionId}", name="competition_bids")
      * @Template()
      */
-    public function competitionBidsAction($competitionId)
+    public function competitionBidsAction($competitionId, $past = false)
     {
         /* @var $request \Symfony\Component\HttpFoundation\Request */
         $request = $this->get('request');
@@ -231,7 +234,16 @@ class BidController extends Controller
             throw $this->createNotFoundException('Unable to find Competition entity.');
         }
 
-        $bids = $this->get('totalizer.bid_service')->getUserBidsByCompetition($competitionId);
+        $until = $since = null;
+        if ($past) {
+            $until = new \DateTime(date("Y-m-d") . ' 00:00:00');
+        } else {
+            $since = new \DateTime(date("Y-m-d") . ' 00:00:00');
+        }
+
+        var_dump($since); die();
+        $bids = $this->get('totalizer.bid_service')
+            ->getUserBidsByCompetition($competitionId, $since, $until);
 
         return array(
             'bids' => $bids,

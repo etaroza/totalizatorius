@@ -50,12 +50,20 @@ class Bid
      *
      * @return array
      */
-    public function getUserBidsByCompetition($competitionId)
+    public function getUserBidsByCompetition($competitionId, \DateTime $since = null, \DateTime $until = null)
     {
         $currentUser = $this->userService->getCurrentUser();
 
+        $where = [1];
+        if ($since) {
+            $where[] = sprintf("time >= '%s'", $since->format("Y-m-d H:i:s"));
+        }
+        if ($until) {
+            $where[] = sprintf("time < '%s'", $until->format("Y-m-d H:i:s"));
+        }
+
         $conn = $this->em->getConnection();
-        $query = "SELECT g.*, b.id AS bid_id, b.score_home AS bid_score_home, b.score_away AS bid_score_away, b.points,
+        $query = sprintf("SELECT g.*, b.id AS bid_id, b.score_home AS bid_score_home, b.score_away AS bid_score_away, b.points,
                 th.name as team_h, ta.name as team_a
             FROM game g
             LEFT JOIN team th ON g.team_home = th.id
@@ -64,9 +72,10 @@ class Bid
             LEFT JOIN competition c ON c.tournament_id = t.id
             LEFT JOIN bid b ON b.competition_id = c.id
                 AND b.game_id = g.id
-                AND b.user_id = :userId
+                AND b.user_id = :userId AND %s
             WHERE c.id = :competitionId
-            ORDER BY g.time ASC ";
+            ORDER BY g.time ASC", implode(' AND ', $where));
+var_dump($query); die();
 
         $statement = $conn->prepare($query);
         $statement->bindValue(':competitionId', $competitionId, \PDO::PARAM_INT);
@@ -79,7 +88,6 @@ class Bid
     }
 
     /**
-<<<<<<< HEAD
      * Return grouped stats from bids table.
      * 
      * @param int $competitionId 
