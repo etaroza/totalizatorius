@@ -23,7 +23,7 @@
             {% set previousTime = null %}
 
             {% for bid in bids %}
-            {% if previousTime != bid.time %}
+            {% if previousTime != bid.time|slice(0, 10) %}
             <tr>
                 <th colspan="8">
                     {{ bid.time|slice(0, 10) }}
@@ -68,7 +68,7 @@
                 </td>
                 <td>{{ bid['points'] }}</td>
             </tr>
-                {% set previousTime = bid.time %}
+                {% set previousTime = bid.time|slice(0, 10) %}
             {% endfor %}
             </tbody>
         </table>
