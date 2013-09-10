@@ -9,9 +9,11 @@
     </div>
 </div>
 
-<ul>
-    <li><a href="{{ path('competition_show', { 'slug': entity.slug }) }}">Games</a></li>  
-    <li><a href="{{ path('competition_stats', { 'slug': entity.slug }) }}">Stats</a></li>  
+<ul class="nav nav-tabs">
+    <li {% if app.request.get('_route') == 'competition_show' %}class="active"{% endif %}><a href="{{ path('competition_show', { 'slug': entity.slug }) }}">Games</a></li>
+    <li {% if app.request.get('_route') == 'competition_history' %}class="active"{% endif %}><a href="{{ path('competition_history', { 'slug': entity.slug }) }}">History</a></li>
+    <li {% if app.request.get('_route') == 'competition_stats' %}class="active"{% endif %}><a href="{{ path('competition_stats', { 'slug': entity.slug }) }}">Stats</a></li>
+    <li {% if app.request.get('_route') == 'competition_rules' %}class="active"{% endif %}><a href="{{ path('competition_rules', { 'slug': entity.slug }) }}">Rules</a></li>
 </ul>
 
 {% block content %}{% endblock %}

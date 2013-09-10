@@ -79,6 +79,33 @@ class CompetitionController extends Controller
         );
     }
 
+    /**
+     * Competition stats
+     *
+     * @Route("/{slug}/stats", name="competition_stats")
+     * @Method("GET")
+     * @Template()
+     */
+    public function statsAction($slug)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('TotoTotalizerBundle:Competition')->findOneBy(['slug' => $slug]);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Competition entity.');
+        }
+        
+       
+        $bidService = $this->get('totalizer.bid_service');
+        $stats = $bidService->getStats($entity->getId());
+        
+        return [
+            'entity' => $entity,
+            'stats' => $stats
+        ];
+    }
+    
     
     /**
      * Competition update points
@@ -102,6 +129,31 @@ class CompetitionController extends Controller
         echo 'done'; die;
     }
     
+    /**
+     *
+     * @Route("/{slug}/userstats/{userId}", name="competition_user_stats")
+     * @Template("TotoTotalizerBundle:Bid:competitionStats.html.twig")
+     */
+    public function competitionStatsAction($slug, $userId)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('TotoTotalizerBundle:Competition')->findOneBy(['slug' => $slug]);
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Competition entity.');
+        }
+
+        $bids = $this->get('totalizer.bid_service')->getUserBidsByCompetition($entity->getId(), null, null, $userId);
+
+        $user = $em->getRepository('TotoUserBundle:User')->find($userId);
+        
+        return array(
+            'user' => $user,
+            'bids' => $bids,
+            'entity'      => $entity
+        );
+    }
+    
     
     /**
      * Finds and displays a Competition entity.
@@ -112,14 +164,7 @@ class CompetitionController extends Controller
      */
     public function showAction($slug)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('TotoTotalizerBundle:Competition')->findOneBy(['slug' => $slug]);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Competition entity.');
-        }
-
+        $entity = $this->getCompetitionBySlug($slug);
         $deleteForm = $this->createDeleteForm($entity->getId());
 
         return array(
@@ -215,34 +260,7 @@ class CompetitionController extends Controller
 
         return $this->redirect($this->generateUrl('competition'));
     }
-
-    /**
-     * Competition stats
-     *
-     * @Route("/{slug}/stats", name="competition_stats")
-     * @Method("GET")
-     * @Template()
-     */
-    public function statsAction($slug)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('TotoTotalizerBundle:Competition')->findOneBy(['slug' => $slug]);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Competition entity.');
-        }
-        
-       
-        $bidService = $this->get('totalizer.bid_service');
-        $stats = $bidService->getStats($entity->getId());
-
-        return [
-            'entity' => $entity,
-            'stats' => $stats
-        ];
-    }
-
+    
     /**
      * Creates a form to delete a Competition entity by id.
      *
@@ -256,5 +274,50 @@ class CompetitionController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+
+    /**
+     * Competition rules
+     *
+     * @Route("/{slug}/rules", name="competition_rules")
+     * @Method("GET")
+     * @Template()
+     */
+    public function rulesAction($slug)
+    {
+        $entity = $this->getCompetitionBySlug($slug);
+
+        return [
+            'entity' => $entity
+        ];
+    }
+
+    /**
+     * History
+     *
+     * @Route("/{slug}/history", name="competition_history")
+     * @Method("GET")
+     * @Template()
+     */
+    public function historyAction($slug)
+    {
+        $entity = $this->getCompetitionBySlug($slug);
+
+        return [
+            'entity' => $entity
+        ];
+    }
+
+    protected function getCompetitionBySlug($slug)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('TotoTotalizerBundle:Competition')->findOneBy(['slug' => $slug]);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Competition entity.');
+        }
+
+        return $entity;
     }
 }
