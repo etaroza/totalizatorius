@@ -4,7 +4,7 @@ namespace Toto\ImportBundle\Importer;
 
 abstract class AbstractImporter
 {
-    protected $invalidateCacheTime = 900; // 15 min
+    protected $invalidateCacheTime = 180; // 3 min
     
     /**
      * @var string
